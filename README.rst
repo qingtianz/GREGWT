@@ -55,7 +55,11 @@ Prepare a survey to be used by an agent based simulation model
 
 .. code:: r
 
-    Synthetic.pop <- Synthetize(data_in=Weights.GREGWT)
+    ## rename weights column if needed
+    Weights.GREGWT$final_weights$my_w <-
+        Weights.GREGWT$final_weights$w
+    Synthetic.pop <- Synthetize(data_in=Weights.GREGWT,
+                                weights_col="my_w")
 
 Data
 ----

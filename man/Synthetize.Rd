@@ -55,6 +55,10 @@ directory.  This option will suppress the output to the command line. You
 can process the output by calling the function logtocsv() provided by this
 package.}
 
+\item{weights_col}{(default = NULL) name of the column in \code{data_in$final_weights}
+used as sampling weights when \code{data_in} is provided. If \code{NULL}, the
+first non-\code{id} column is selected.}
+
 \item{verbose}{(default = FALSE) be verbose.}
 }
 \value{

@@ -47,6 +47,9 @@
 #' directory.  This option will suppress the output to the command line. You
 #' can process the output by calling the function logtocsv() provided by this
 #' package.
+#' @param weights_col (default = NULL) column name in data_in$final_weights to
+#' use as sampling weights when \\code{data_in} is supplied. If \\code{NULL},
+#' the first non-'id' column is used.
 #' @param verbose (default = FALSE) be verbose.
 #' @return result matrix of synthetic population.
 #' @author M. Esteban Munoz H.
@@ -69,7 +72,8 @@ Synthetize.default <- function(
         random_seed     = 12345,
         verbose         = FALSE,
         output_log      = FALSE,
-        output          = FALSE){
+        output          = FALSE,
+        weights_col     = NULL){
 
     if (verbose) cat("Initiated\n")
     # set the random seed to ensure reproducibility
@@ -108,7 +112,10 @@ Synthetize.default <- function(
         }else if (distribution == "ones"){
             w <- rep(1, nW)
         } else {
-            w <- data_in$final_weights[,'w']
+            if (is.null(weights_col)) {
+                weights_col <- setdiff(colnames(data_in$final_weights), "id")[1]
+            }
+            w <- data_in$final_weights[[weights_col]]
             if (is.nan(mean(w))) {
                 w[is.nan(w)] <- 1
             } else {
